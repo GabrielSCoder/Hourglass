@@ -1,0 +1,13 @@
+setEnv DB_DEV_HOST localhost
+setEnv DB_DEV_USER root
+setEnv DB_DEV_PASSWORD
+setEnv DB_DEV_DB_NAME hourglass_dev
+
+
+setEnv ENV DEV
+
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php/$0m[PT,L]

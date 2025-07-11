@@ -1,0 +1,45 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+main {
+    background-color: #ccc;
+    width: 600px;
+    margin: 0px auto;
+}
+
+#tarefa-form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    gap: 10px;
+    /* padding-bottom: 20px; */
+}
+
+#tarefa-form input[type="text"] {
+    height: 25px;
+    padding-left: 5px;
+}
+
+#tarefa-form textarea {
+    padding-left: 5px;
+    padding-top: 3px;
+}
+
+#tarefa-form input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle
+}
+
+#tarefa-form input[type="datetime-local"] {
+    width: 200px;
+    height: 25px;
+    padding-left: 5px;
+}
+
+#tarefa-form input[type="submit"] {
+    width: 100px;
+    height: 25px;
+    align-self: flex-end;
+}
