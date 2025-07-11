@@ -1,15 +1,31 @@
 <?php
 
-require __DIR__ . "/../app/config/databaseConfig.php";
-require __DIR__ . "/../app/core/Database.php";
-require __DIR__ . "/../app/models/TarefaModel.php";
+session_start();
+date_default_timezone_set("America/Fortaleza");
 
-// echo "hello world!";
+spl_autoload_register(function ($class)
+{
+    $folders = [
+        __DIR__ . '/../app/controllers/',
+        __DIR__ . '/../app/core/',
+        __DIR__ . '/../app/models/',
+        __DIR__ . '/../app/config/',
+    ];
 
-// $var = DbConfig::getDevDbConfig();
-// echo "<hr />";
-// var_dump($var);
-// echo "<hr />";
-// Database::connect();
+    foreach ($folders as $folder)
+    {
+        $file = $folder . $class . '.php';
+        if (file_exists($file))
+        {
+            require_once $file;
+            return;
+        }
+    }
+});
 
-require __DIR__ . "/../app/views/home_template.php";
+
+require_once __DIR__ . '/../app/core/Router.php';
+
+$core = new Router();
+
+$core->start($_GET);

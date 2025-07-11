@@ -7,7 +7,7 @@ setEnv DB_DEV_DB_NAME hourglass_dev
 setEnv ENV DEV
 
 
-RewriteEngine on
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* index.php/$0m[PT,L]
+RewriteRule ^ index.php [QSA,L]

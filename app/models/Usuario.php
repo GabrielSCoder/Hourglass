@@ -11,10 +11,20 @@ class Usuario
 
     public function __construct($params = [])
     {
-        $this->id = $params['id'] ?? null.
+        $this->id = $params['id'] ?? null .
         $this->nome = $params['nome'] ?? null;
         $this->usuario = $params['usuario'] ?? null;
         $this->data_criacao = $params['data_criacao'] ?? null;
         $this->data_nascimento = $params['data_nascimento'] ?? null;
+    }
+
+    public function encriptar()
+    {
+        $this->senha = password_hash($this->senha, PASSWORD_DEFAULT);
+    }
+
+    public function verificarSenha($senha)
+    {
+        return password_verify($this->senha, $senha);
     }
 }
