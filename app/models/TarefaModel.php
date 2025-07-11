@@ -36,6 +36,15 @@ class TarefaModel
         return $pdo->lastInsertId();
     }
 
+    public static function concluirTarefa(Tarefa $tarefa)
+    {
+        $pdo  = Database::connect();
+        $stmt = $pdo->prepare("UPDATE tarefa SET concluida = 'true' WHERE id = :id");
+        $stmt->bindParam(":id", $tarefa->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $pdo->lastInsertId();
+    }
+
     public static function deleteTarefa($id)
     {
         $pdo  = Database::connect();
