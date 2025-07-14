@@ -5,8 +5,9 @@ class TarefaController
     public function index()
     {
         $title   = "Tarefas";
-        $usuario = AuthController::usuarioId();
-        $tarefas = TarefaModel::getAllByUser($usuario);
+        $usuarioId = AuthController::usuarioId();
+        $usuario = UsuarioModel::GetUserById($usuarioId);
+        $tarefas = TarefaModel::getAllByUser($usuarioId);
         $message = "Todas as tarefas";
         $content = __DIR__ . "/../views/tabelaTarefa.php";
         require __DIR__ . "/../views/home_template.php";

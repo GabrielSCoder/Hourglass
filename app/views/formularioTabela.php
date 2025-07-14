@@ -33,7 +33,8 @@
             <input type="checkbox" name="concluida"
                 <?= (isset($tarefa) && $tarefa['concluida'] == 1) ? 'checked' : '' ?> disabled />
         </label>
-        <input type="button" id="btn-disable" value="editar" />
+        <input type="button" id="btn-disable" value="editar"
+            <?= (isset($tarefa) && $tarefa['concluida'] == 1 || !isset($_GET['id'])) ? 'disabled' :  "" ?> />
         <input type="button" id="btn-concluir" value="concluir tarefa" onclick="return confirm('Concluir?')"
             <?= (isset($tarefa) && $tarefa['concluida'] == 1 || !isset($_GET['id'])) ? 'disabled' :  "" ?> />
         <input type="submit" value="confirmar" <?= $_GET['action'] === "ver" ? 'disabled' : "" ?> />

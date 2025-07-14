@@ -1,9 +1,10 @@
 <div>
+    <h2>Tarefas do usuário <?= $usuario['nome_completo']; ?></h2>
     <?php if (empty($tarefas)): ?>
     <p>Nenhum tarefa cadastrada.</p>
     <button onclick="window.location.href='?pagina=tarefa&action=criar'">Criar nova</button>
     <?php else: ?>
-    <h3>Tarefas</h3>
+    <h4>Tarefas</h4>
     <hr />
     <?php foreach ($tarefas as $tarefa): ?>
     <a href="?pagina=tarefa&action=ver&id=<?=$tarefa['id']?>" style="text-decoration: none; color: black;">
@@ -17,7 +18,8 @@
                 <?php endif; ?>
             </div>
             <div>
-                <a href="?pagina=tarefa&action=excluir&id=<?= $tarefa['id'] ?>">Excluir</a>
+                <a href="?pagina=tarefa&action=excluir&id=<?= $tarefa['id'] ?>"
+                    onclick="return confirm('Deseja exluir?')">Excluir</a>
             </div>
         </div>
     </a>
