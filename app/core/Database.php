@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../config/databaseConfig.php';
+
 class Database
 {
     private static $pdo;

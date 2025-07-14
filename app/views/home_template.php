@@ -13,5 +13,6 @@
         <?php include $content; ?>
     </main>
 </body>
+<script src="/hourglass/public/scripts/formularioTarefa.js"></script>
 
 </html>

@@ -11,7 +11,7 @@ class TarefaModel
     public static function createTarefa(Tarefa $tarefa)
     {
         $pdo  = Database::connect();
-        $stmt = $pdo->prepare("INSERT INTO tarefa (titulo, prioridade, descricao, data_limite, concluida, usuario_id) values :titulo, :prioridade, :descricao, :data_limite, :concluida, :usuario_id");
+        $stmt = $pdo->prepare("INSERT INTO tarefa (titulo, prioridade, descricao, data_limite, concluida, usuario_id) values (:titulo, :prioridade, :descricao, :data_limite, :concluida, :usuario_id)");
         $stmt->bindParam(":titulo", $tarefa->titulo);
         $stmt->bindParam(":descricao", $tarefa->descricao);
         $stmt->bindParam(":data_limite", $tarefa->data_limite);
@@ -29,9 +29,10 @@ class TarefaModel
         $stmt->bindParam(":id", $tarefa->id, PDO::PARAM_INT);
         $stmt->bindParam(":titulo", $tarefa->titulo);
         $stmt->bindParam(":descricao", $tarefa->descricao);
-        $stmt->bindParam(":data_limite", $tarefa->data_limite);
         $stmt->bindParam(":prioridade", $tarefa->prioridade);
         $stmt->bindParam(":concluida", $tarefa->concluida);
+        $stmt->bindParam(":data_limite", $tarefa->data_limite);
+        $stmt->bindParam(":usuario_id", $tarefa->usuario_id, PDO::PARAM_INT);
         $stmt->execute();
         return $pdo->lastInsertId();
     }
@@ -65,10 +66,10 @@ class TarefaModel
 
     public static function getAllByUser($id)
     {
-       $pdo  = Database::connect();
+        $pdo  = Database::connect();
         $stmt = $pdo->prepare("SELECT * from tarefa WHERE usuario_id = :usuario_id");
         $stmt->bindParam(":usuario_id", $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

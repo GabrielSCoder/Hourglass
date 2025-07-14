@@ -6,10 +6,10 @@ date_default_timezone_set("America/Fortaleza");
 spl_autoload_register(function ($class)
 {
     $folders = [
+        __DIR__ . '/../app/config/',
         __DIR__ . '/../app/controllers/',
         __DIR__ . '/../app/core/',
         __DIR__ . '/../app/models/',
-        __DIR__ . '/../app/config/',
     ];
 
     foreach ($folders as $folder)
