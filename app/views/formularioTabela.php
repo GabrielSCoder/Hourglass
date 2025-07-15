@@ -1,9 +1,14 @@
 <div style="width: 500px;">
     <form method="post" action="<?= $action ?>" id="tarefa-form">
 
-        <?php if (isset($usuario_id)):?>
-        <input type="hidden" name="usuario_id" value="<?= $usuario_id ?>" />
+        <?php if (isset($usuario_id) || !empty($tarefa['usuario_id'])):?>
+        <input type="hidden" name="usuario_id" value="<?= $usuario_id ?? $tarefa['usuario_id'] ?>" />
         <?php endif; ?>
+
+        <?php if (!empty($tarefa['id'])):?>
+        <input type="hidden" name="id" value="<?= $usuario_id ?? $tarefa['id'] ?>" />
+        <?php endif; ?>
+
 
         <label>Tarefa</label>
         <input type="text" name="titulo" value="<?=htmlspecialchars($tarefa['titulo'] ?? '') ?>"
@@ -30,13 +35,16 @@
             <label>Alta</label>
         </fieldset>
         <label>Tarefa concluída:
-            <input type="checkbox" name="concluida"
-                <?= (isset($tarefa) && $tarefa['concluida'] == 1) ? 'checked' : '' ?> disabled />
+            <input type="checkbox" name="concluida" id="concluida"
+                <?= (isset($tarefa) && $tarefa['concluida'] == 1) ? 'checked disabled' : '' ?>
+                <?= $_GET['action'] === "ver" ? 'disabled' : "" ?> />
         </label>
         <input type="button" id="btn-disable" value="editar"
             <?= (isset($tarefa) && $tarefa['concluida'] == 1 || !isset($_GET['id'])) ? 'disabled' :  "" ?> />
-        <input type="button" id="btn-concluir" value="concluir tarefa" onclick="return confirm('Concluir?')"
-            <?= (isset($tarefa) && $tarefa['concluida'] == 1 || !isset($_GET['id'])) ? 'disabled' :  "" ?> />
         <input type="submit" value="confirmar" <?= $_GET['action'] === "ver" ? 'disabled' : "" ?> />
     </form>
+    <?php if (!empty($message)): ?>
+    <br />
+    <p style="color: red; text-align: center;"><?=$message;?></p>
+    <?php endif; ?>
 </div>

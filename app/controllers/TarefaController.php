@@ -4,12 +4,12 @@ class TarefaController
 {
     public function index()
     {
-        $title   = "Tarefas";
+        $title     = "Tarefas";
         $usuarioId = AuthController::usuarioId();
-        $usuario = UsuarioModel::GetUserById($usuarioId);
-        $tarefas = TarefaModel::getAllByUser($usuarioId);
-        $message = "Todas as tarefas";
-        $content = __DIR__ . "/../views/tabelaTarefa.php";
+        $usuario   = UsuarioModel::GetUserById($usuarioId);
+        $tarefas   = TarefaModel::getAllByUser($usuarioId);
+        $message   = "Todas as tarefas";
+        $content   = __DIR__ . "/../views/tabelaTarefa.php";
         require __DIR__ . "/../views/home_template.php";
     }
 
@@ -18,17 +18,17 @@ class TarefaController
         $title   = "Tarefa";
         $id      = $_GET['id'];
         $tarefa  = TarefaModel::getById($id);
-        $action = "?pagina=tarefa&action=editar";
+        $action  = "?pagina=tarefa&action=salvar";
         $content = __DIR__ . "/../views/formularioTabela.php";
         require __DIR__ . "/../views/home_template.php";
     }
 
     public function criar()
     {
-        $title   = "Tarefa - formulario";
-        $action = "?pagina=tarefa&action=salvar";
+        $title      = "Tarefa - formulario";
+        $action     = "?pagina=tarefa&action=salvar";
         $usuario_id = AuthController::usuarioId();
-        $content = __DIR__ . "/../views/formularioTabela.php";
+        $content    = __DIR__ . "/../views/formularioTabela.php";
         require __DIR__ . "/../views/home_template.php";
     }
 
@@ -39,31 +39,31 @@ class TarefaController
             TarefaModel::deleteTarefa($id);
             header("Location: ?pagina=tarefa");
             exit;
-        } catch (Exception $e) {
-            echo $e->getMessage();
         }
-    }
-
-    public function editar()
-    {
-        $tarefa = new Tarefa($_POST);
-        try {
-            TarefaModel::updateTarefa($tarefa);
-            header('Location: ?pagina=tarefa');
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
+        catch (Exception $e)
+        {
+            echo $e->getMessage();
         }
     }
 
     public function salvar()
     {
         $tarefa = new Tarefa($_POST);
+
         try {
-            // var_dump($tarefa);
-            TarefaModel::createTarefa($tarefa);
+            TarefaModel::save($tarefa);
             header('Location: ?pagina=tarefa');
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
+            exit;
+        }
+        catch (Exception $e)
+        {
+            $title   = "Tarefa";
+            $message = $e->getMessage();
+            $tarefa = get_object_vars($tarefa);
+            $action  = "?pagina=tarefa&action=salvar";
+            $content = __DIR__ . "/../views/formularioTabela.php";
+            require __DIR__ . "/../views/home_template.php";
         }
     }
+
 }

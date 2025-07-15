@@ -39,6 +39,7 @@ class HomeController
         }
         catch (Exception $e)
         {
+            $usuario->senha = null;
             $title   = "Criar conta";
             $action  = "?pagina=home&action=registrar";
             $message = $e->getMessage();
@@ -53,7 +54,7 @@ class HomeController
         
         if (UsuarioModel::login($usuario))
         {
-            header("Location: ?pagina=tarefas");
+            header("Location: ?pagina=tarefa");
             exit;
         } else
         {

@@ -19,7 +19,7 @@ class Tarefa
         $this->descricao = $params['descricao'] ?? null;
         $this->data_criacao = $params['data_criacao'] ?? null;
         $this->prioridade = $params['prioridade'] ?? null;
-        $this->concluida = $params['concluida'] ?? false;
+        $this->concluida = isset($params['concluida']) ? 1 : 0;;
         $this->usuario_id = $params['usuario_id'] ?? null;
     }
 }

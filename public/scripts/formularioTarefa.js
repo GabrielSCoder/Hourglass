@@ -1,4 +1,5 @@
 const btnDisable = document.getElementById("btn-disable");
+const btnConcluir = document.getElementById("concluida");
 
 if (btnDisable) {
     btnDisable.addEventListener("click", function () {
@@ -7,9 +8,20 @@ if (btnDisable) {
 
         fields.forEach(field => {
             console.log(field)
-            if (field.disabled && field.name != "concluida" && field.id != "btn-concluir") {
+            if (field.disabled) {
                 field.disabled = false;
             }
         });
     });
+}
+
+if (btnConcluir) {
+    btnConcluir.addEventListener("click", function () {
+        if (confirm("Concluir tarefa?")) {
+
+            btnConcluir.checked = true;
+            btnConcluir.value = "1";
+
+        }
+    })
 }

@@ -2,6 +2,42 @@
 
 class TarefaModel
 {
+    public static function save(Tarefa $tarefa)
+    {
+        if (empty($tarefa->id))
+        {
+            return self::createTarefa($tarefa);
+        } else {
+            return self::updateTarefa($tarefa);
+        }
+    }
+
+    public static function validar(Tarefa $tarefa, $metodo = "criar")
+    {
+        $erros = [];
+
+        if (!isset($tarefa->id) && $metodo != "criar")
+        {
+            $erros[] = "Id inválido";
+        }
+        if (!isset($tarefa->titulo) || trim($tarefa->titulo) === '')
+        {
+            $erros[] = "titulo vazio";
+        }
+        if (!isset($tarefa->descricao) || trim($tarefa->descricao) === '')
+        {
+            $erros[] = "descrição vazia";
+        }
+        if (!isset($tarefa->prioridade) || trim($tarefa->prioridade) === '')
+        {
+            $erros[] = "prioridade obrigatória";
+        }
+        if (count($erros) > 0)
+        {
+            throw new Exception(implode("<br>", $erros));
+        }
+    }
+
     public static function createTable()
     {
         $pdo = Database::connect();
@@ -10,6 +46,8 @@ class TarefaModel
 
     public static function createTarefa(Tarefa $tarefa)
     {
+        TarefaModel::validar($tarefa);
+
         $pdo  = Database::connect();
         $stmt = $pdo->prepare("INSERT INTO tarefa (titulo, prioridade, descricao, data_limite, concluida, usuario_id) values (:titulo, :prioridade, :descricao, :data_limite, :concluida, :usuario_id)");
         $stmt->bindParam(":titulo", $tarefa->titulo);
@@ -24,15 +62,16 @@ class TarefaModel
 
     public static function updateTarefa(Tarefa $tarefa)
     {
+        TarefaModel::validar($tarefa, "atualializar");
+        
         $pdo  = Database::connect();
-        $stmt = $pdo->prepare("UPDATE tarefa SET titulo = :titulo , prioridade = :prioridade, descricao = :descricao, data_limite = :data_limite, concluida = :concluida WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE tarefa SET titulo = :titulo , prioridade = :prioridade, descricao = :descricao, data_limite = :data_limite, concluida = :concluida, data_limite := data_limite WHERE id = :id");
         $stmt->bindParam(":id", $tarefa->id, PDO::PARAM_INT);
         $stmt->bindParam(":titulo", $tarefa->titulo);
         $stmt->bindParam(":descricao", $tarefa->descricao);
         $stmt->bindParam(":prioridade", $tarefa->prioridade);
-        $stmt->bindParam(":concluida", $tarefa->concluida);
+        $stmt->bindParam(":concluida", $tarefa->concluida, PDO::PARAM_INT);
         $stmt->bindParam(":data_limite", $tarefa->data_limite);
-        $stmt->bindParam(":usuario_id", $tarefa->usuario_id, PDO::PARAM_INT);
         $stmt->execute();
         return $pdo->lastInsertId();
     }
