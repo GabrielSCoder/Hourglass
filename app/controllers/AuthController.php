@@ -22,7 +22,7 @@ class AuthController
     {
         if (!isset($_SESSION['usuario_id']))
         {
-            header("Location: ?pagina=tarefa");
+            header("Location: ?pagina=home");
             exit;
         }
     }
